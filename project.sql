@@ -1,19 +1,23 @@
 --QUESTION 1
 --Count the customer base based on customer type to identify current customer preferences and 
---sort them in descending order. 
+--sort them in descending order.
 
---SELECT COUNT(C_ID) AS customer_base, C_TYPE
+--SELECT  C_TYPE AS Customer_Type, COUNT(C_ID) AS Customer_Count
 --FROM Customer
 --GROUP BY C_TYPE
---ORDER BY customer_base DESC
+--ORDER BY Customer_Count DESC;
 
 --QUESTION 2
+--Count the customer base based on their status of payment in descending order.
+
 --SELECT Payment_Status, COUNT(DISTINCT Customer.C_ID) AS customer_base
 --FROM Customer
 --JOIN dbo.Payment_Details ON Customer.C_ID = Payment_Details.C_ID
 --GROUP BY Payment_Status
 --ORDER BY Payment_Status DESC;
 --QUESTION 3
+--Count the customer base based on their payment mode in descending order of count
+
 --SELECT Payment_Mode, COUNT(DISTINCT Customer.C_ID) AS customer_base
 --FROM Customer
 --JOIN dbo.Payment_Details ON Customer.C_ID = Payment_Details.C_ID
@@ -21,6 +25,8 @@
 --ORDER BY Payment_Mode DESC;
 
 --QUESTION 4
+--Count the customers as per shipment domain in descending order
+
 --SELECT SH_DOMAIN, COUNT(DISTINCT Customer.C_ID) AS customer_base
 --FROM Customer
 --JOIN dbo.Shipment_Details ON Customer.C_ID = Shipment_Details.C_ID
@@ -28,6 +34,7 @@
 --ORDER BY SH_DOMAIN DESC;
 
 --QUESTION 5
+--Count the customer according to service type in descending order of count.
 
 --SELECT SER_TYPE, COUNT(Customer.C_ID) AS customer_base
 --FROM Customer
@@ -36,6 +43,7 @@
 --ORDER BY SER_TYPE DESC;
 
 --QUESTION 6
+--Explore employee count based on the designation-wise count of employees' IDs in descending order
 
 --SELECT E_DESIGNATION, COUNT(DISTINCT E_ID) AS employee_base
 --FROM dbo.Employee_Details
@@ -43,6 +51,9 @@
 --ORDER BY employee_base DESC;
 
 --QUESTION 7
+ --Considering average payment amount based on customer type having payment mode as COD in 
+--descending order
+
 --SELECT AVG(AMOUNT) as Average_Amount, C_TYPE
 --FROM  Customer
 --JOIN dbo.Payment_Details ON Customer.C_ID= Payment_Details.C_ID
@@ -51,18 +62,25 @@
 --ORDER BY Average_Amount DESC
 
 --Question 8
+ --Finding C_ID, M_ID, and tenure for those customers whose membership is over 10 years
+
 --SELECT C_ID,Customer.M_ID, DATEDIFF(YEAR, Start_date, GETDATE()) AS Tenure
 --FROM Customer
 --JOIN dbo.Membership ON Customer.M_ID= Membership.M_ID
 --WHERE DATEDIFF(YEAR, Start_date, GETDATE()) > 10;
 
 --question 9
+--Calculate the average payment amount based on payment mode where the payment date is 
+--not null
+
 --SELECT AVG(AMOUNT) as Average_Amount, Payment_Mode
 --FROM Payment_Details
 --WHERE Payment_Date IS NOT NULL
 --GROUP BY Payment_Mode
 
 --question 10
+-- Calculate the average shipment weight based on payment_status where shipment content 
+--does not start with "H."
 --SELECT AVG(SH_WEIGHT) as Average_Weight,Payment_Status
 --FROM Shipment_Details
 --JOIN Payment_Details ON Shipment_Details.SH_ID=Payment_Details.SH_ID
@@ -70,6 +88,7 @@
 --GROUP BY Payment_Status
 
 --QUESTION 11
+--Retrieve the names and designations of all employees in the 'NY' E_Branch
 --SELECT E_NAME, E_DESIGNATION
 --FROM Employee_Details
 --WHERE E_BRANCH = 'NY'
@@ -158,3 +177,12 @@
 --JOIN Payment_Details ON Customer.C_ID = Payment_Details.C_ID
 --WHERE AMOUNT > 5000 AND Payment_Mode='COD'
 --GROUP BY Payment_Details.C_ID, C_NAME, Payment_Mode
+
+--QUESTION 23
+--Explore employee count based on the designation-wise count of employees' IDs in descending 
+--order
+--Branch-wise count of employees for efficiency of deliveries in descending order
+--SELECT E_BRANCH, COUNT(E_ID) AS Employee_Count
+--FROM Employee_Details
+--GROUP BY E_BRANCH
+--ORDER BY Employee_Count DESC;
